@@ -1,0 +1,3 @@
+yaml
+feedparser
+awesome-slugify
