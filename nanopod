@@ -79,6 +79,20 @@ def process_podcast_item(item, download_dir, dry_run=False, quiet=False):
         download(url, final_path, quiet=quiet)
 
 
+def clean_download_dir(download_dir, max_count, dry_run=False, quiet=False):
+    if not os.path.exists(download_dir):
+        # Can happen when running the first time with --dry-run
+        return
+
+    filenames = [x for x in os.listdir(download_dir) if x.endswith('.mp3')]
+    filenames = sorted(filenames, reverse=True)
+    for filename in filenames[max_count:]:
+        if not quiet:
+            print('Removing {}'.format(filename))
+        if not dry_run:
+            os.unlink(os.path.join(download_dir, filename))
+
+
 def process_podcast(podcast, dry_run=False, quiet=False):
     feed = feedparser.parse(podcast['url'])
     feed_title = feed.feed.title
@@ -89,13 +103,7 @@ def process_podcast(podcast, dry_run=False, quiet=False):
     for item in items[:max_count]:
         process_podcast_item(item, download_dir, dry_run=dry_run, quiet=quiet)
 
-    filenames = [x for x in os.listdir(download_dir) if x.endswith('.mp3')]
-    filenames = sorted(filenames, reverse=True)
-    for filename in filenames[max_count:]:
-        if not quiet:
-            print('Removing {}'.format(filename))
-        if not dry_run:
-            os.unlink(os.path.join(download_dir, filename))
+    clean_download_dir(download_dir, max_count, dry_run=dry_run, quiet=quiet)
 
 
 def main():
