@@ -44,8 +44,8 @@ will be removed.
 ## Motivation
 
 I was looking for a podcast download tool with the following features:
-- Crontab friendly: run from the command-line, without needing a particular
-  user
+- Crontab friendly: run from the command-line, without requiring configuration
+  files to be stored in the home of a specific user
 - Capable of handling the "La revue de presque de Nicolas Canteloup" podcast,
   which has the particularity of having all its episodes named "podcast.mp3"
   (hence the renaming feature)
