@@ -38,7 +38,7 @@ It will create in `/home/media/podcasts` one directory per podcast, and in this
 directory, one file per podcast, named using the following format:
 `<year>-<month>-<day> - <slugified-version-of-title>.mp3`.
 
-If there are more than `max_count` mp3 files in the podcast dir, the oldest one
+If there are more than `max_count` mp3 files in the podcast dir, the oldest ones
 will be removed.
 
 ## Motivation
