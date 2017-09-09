@@ -46,10 +46,17 @@ def download(url, final_path, quiet=False):
         print('Failed to download {}: {}'.format(url, exc))
         return
     with open(final_path, 'wb') as outf:
-        chunk = inf.read()
-        if not chunk:
-            return
-        outf.write(chunk)
+        while True:
+            chunk = inf.read(16384)
+            if not chunk:
+                if not quiet:
+                    sys.stdout.write('\n')
+                    sys.stdout.flush()
+                return
+            outf.write(chunk)
+            if not quiet:
+                sys.stdout.write('.')
+                sys.stdout.flush()
 
 
 def process_podcast_item(item, download_dir, dry_run=False, quiet=False):
