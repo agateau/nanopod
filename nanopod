@@ -40,7 +40,11 @@ def download(url, final_path, quiet=False):
     if not os.path.exists(final_dir):
         os.makedirs(final_dir)
 
-    inf = urllib2.urlopen(url)
+    try:
+        inf = urllib2.urlopen(url)
+    except urllib2.HTTPError as exc:
+        print('Failed to download {}: {}'.format(url, exc))
+        return
     with open(final_path, 'wb') as outf:
         chunk = inf.read()
         if not chunk:
